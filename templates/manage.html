@@ -1,11 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
-
-<form method = "POST">
+<form method = "GET">
      <h2> Enter Pet Name</h2>
     Pet Name:  <input type="text" name="petName"/><br/>
-    Notes:     <input type="text" name="note"/><br/>
-    <button type="text">Submit</button>
+    <button type="submit">Submit</button>
 </form>
+
+        <ul>
+        {% if Patient == PetName %}
+            <li>{{ directory[0] }} {{ directory[1] }} {{ directory[2] }} {{ directory[3] }}</li>
+        {% endif %}
+        </ul>
+        <ul>
 
 {% endblock %}
