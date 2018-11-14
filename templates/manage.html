@@ -1,16 +1,31 @@
 {% extends "layout.html" %}
 {% block content %}
 <form method = "GET">
-     <h2> Enter Pet Name</h2>
+     <h2> Enter Pet Name to look up record</h2>
     Pet Name:  <input type="text" name="petName"/><br/>
-    <button type="submit">Submit</button>
+    <button type="submit">Lookup</button>
+    <div class="container">
+    <ul>
+        {% for patient in directory %}
+           <li> ID: {{ patient[0] }}<br> Owner Last: {{ patient[1] }}<br> Owner First: {{ patient[2] }} <br>Pet Name: {{ patient[3] }}</li><br>
+        {% endfor %}
+    </ul>
+</div>
 </form>
 
-        <ul>
-        {% if Patient == PetName %}
-            <li>{{ directory[0] }} {{ directory[1] }} {{ directory[2] }} {{ directory[3] }}</li>
-        {% endif %}
-        </ul>
-        <ul>
+
+<form method = "POST">
+     <h2> Enter Pet ID to either add a new Note or delete record</h2>
+    Pet ID:  <input type="integer" name="petID"/><br/>
+    Enter New Note or type "Delete" to remove record: <input type="text" name="update"/><br>
+    <button type="submit">Update</button>
+    <div class="container">
+    <ul>
+        {% for patient in directory %}
+           <li> ID: {{ patient[0] }}<br> Owner Last: {{ patient[1] }}<br> Owner First: {{ patient[2] }} <br>Pet Name: {{ patient[3] }}</li><br>
+        {% endfor %}
+    </ul>
+    </div>
+</form>
 
 {% endblock %}

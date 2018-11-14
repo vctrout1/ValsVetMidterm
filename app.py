@@ -14,15 +14,13 @@ def sendSQL(sql):
 
 sendSQL(sql)
 
-def getData(a):
+def getData():
     db = sqlite3.connect("./directory.db")
     cur = db.cursor()
-    cur.execute(a)
-    db.commit()
+    sql = '''SELECT * FROM directory'''
+    cur.execute(sql)
     results = cur.fetchall()
     db.close()
-    print(results)
-    patient=results
     return results
 
 app = Flask(__name__)
@@ -44,14 +42,34 @@ def add():
 @app.route('/manage', methods=['GET','POST'])
 def manage():
     if request.method == "GET":
-
-        lookup = '''SELECT * FROM directory WHERE PetName = "Maggie"'''
-        getData(lookup)
-        all='''SELECT * FROM directory'''
-        directory=getData(all)
-
-    return render_template("manage.html", directory=directory)
-
-
+        db = sqlite3.connect("./directory.db")
+        cur = db.cursor()
+        lookup = '''SELECT * FROM directory WHERE PetName=="Maggie" '''
+        cur.execute(lookup)
+        db.commit()
+        results = cur.fetchall()
+        db.close()
+        # print(results)
+        filterDirectory=results
+        return render_template("manage.html", directory=filterDirectory)
+    elif request.method == "POST":
+        db = sqlite3.connect("./directory.db")
+        cur = db.cursor()
+        petID = 2
+        note = "123"
+        if note=="Delete":
+            petID=2
+            update='''DELETE FROM directory WHERE ID==2'''
+        elif note != "Delete":
+            petID=2
+            update = '''UPDATE directory SET Notes = '123' WHERE ID==2'''
+        cur.execute(update)
+        db.commit()
+        results = getData()
+        db.close()
+        print(results)
+        updatedDirectory = results
+        return render_template("manage.html", directory=updatedDirectory)
+    # return render_template ("manage.html")
 if __name__ == "__main__":
     app.run()
