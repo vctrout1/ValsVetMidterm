@@ -4,28 +4,21 @@
      <h2> Enter Pet Name to look up record</h2>
     Pet Name:  <input type="text" name="petName"/><br/>
     <button type="submit">Lookup</button>
-    <div class="container">
-    <ul>
-        {% for patient in directory %}
-           <li> ID: {{ patient[0] }}<br> Owner Last: {{ patient[1] }}<br> Owner First: {{ patient[2] }} <br>Pet Name: {{ patient[3] }}</li><br>
-        {% endfor %}
-    </ul>
-</div>
-</form>
 
+</form>
+    <div class="container">
+        <ul>
+            {% for patient in directory %}
+               <li> ID: {{ patient[0] }}<br> Owner Last: {{ patient[1] }}<br> Owner First: {{ patient[2] }} <br>Pet Name: {{ patient[3] }}<br>Pet Type: {{ patient[4] }}<br>Notes: {{ patient[5] }}</li><br>
+            {% endfor %}
+        </ul>
+    </div>
 
 <form method = "POST">
      <h2> Enter Pet ID to either add a new Note or delete record</h2>
     Pet ID:  <input type="integer" name="petID"/><br/>
     Enter New Note or type "Delete" to remove record: <input type="text" name="update"/><br>
     <button type="submit">Update</button>
-    <div class="container">
-    <ul>
-        {% for patient in directory %}
-           <li> ID: {{ patient[0] }}<br> Owner Last: {{ patient[1] }}<br> Owner First: {{ patient[2] }} <br>Pet Name: {{ patient[3] }}</li><br>
-        {% endfor %}
-    </ul>
-    </div>
 </form>
 
 {% endblock %}

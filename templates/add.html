@@ -11,4 +11,12 @@
     <button type="submit">Submit</button>
 </form>
 
+<div class="container">
+        <ul>
+            {% for patient in directory %}
+               <li> ID: {{ patient[0] }}<br> Owner Last: {{ patient[1] }}<br> Owner First: {{ patient[2] }} <br>Pet Name: {{ patient[3] }}<br>Pet Type: {{ patient[4] }}<br>Notes: {{ patient[5] }}</li><br>
+            {% endfor %}
+        </ul>
+</div>
+
 {% endblock %}
