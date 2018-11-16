@@ -44,8 +44,8 @@ def manage():
     if request.method == "GET":
         db = sqlite3.connect("./directory.db")
         cur = db.cursor()
-        lookup = '''SELECT * FROM directory WHERE PetName ="{}"'''.format(request.form["petName"]
-        # lookup = '''SELECT * FROM directory WHERE PetName ="Maggie"'''
+        #lookup = '''SELECT * FROM directory WHERE PetName ="{}"'''.format(request.form["petName"]
+        lookup = '''SELECT * FROM directory WHERE PetName ="Maggie"'''
         cur.execute(lookup)
         db.commit()
         results = cur.fetchall()
