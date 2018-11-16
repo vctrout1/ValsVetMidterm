@@ -32,8 +32,8 @@ def home():
 @app.route('/add', methods=['GET','POST'])
 def add():
     if request.method =="POST":
-        # sql ='''INSERT INTO directory (OwnerLast, OwnerFirst, PetName, PetType, Notes) VALUES ('{}','{}','{}','{}','{}')'''.format(request.form["ownerLast"],request.form["ownerFirst"],request.form["petName"],request.form["petType"],request.form["note"])
-        sql ='''INSERT INTO directory (OwnerLast, OwnerFirst, PetName, PetType, Notes) VALUES ("Carr","Betty","Blackberry","Cat","needs an appt")'''
+        sql ='''INSERT INTO directory (OwnerLast, OwnerFirst, PetName, PetType, Notes) VALUES "{}','{}','{}','{}','{}"'''.format(request.form["ownerLast"],request.form["ownerFirst"],request.form["petName"],request.form["petType"],request.form["note"])
+        #sql ='''INSERT INTO directory (OwnerLast, OwnerFirst, PetName, PetType, Notes) VALUES ("Carr","Betty","Blackberry","Cat","needs an appt")'''
         print(sql)
         sendSQL(sql)
     directory = getData()
@@ -44,26 +44,23 @@ def manage():
     if request.method == "GET":
         db = sqlite3.connect("./directory.db")
         cur = db.cursor()
-        # lookup = '''SELECT * FROM directory WHERE PetName ==("{}")'''.format(request.form["petName"]
-        lookup = '''SELECT * FROM directory WHERE PetName =="&petName.value&"'''
+        lookup = '''SELECT * FROM directory WHERE PetName ="{}"'''.format(request.form["petName"]
+        # lookup = '''SELECT * FROM directory WHERE PetName ="Maggie"'''
         cur.execute(lookup)
         db.commit()
         results = cur.fetchall()
         db.close()
-        # print(results)
         filterDirectory=results
         return render_template("manage.html", directory=filterDirectory)
     elif request.method == "POST":
         db = sqlite3.connect("./directory.db")
         cur = db.cursor()
-        petID = 3
-        note = "Delete"
+        note = request.form['update']
+        print (note)
         if note=="Delete":
-            petID=2
-            update='''DELETE FROM directory WHERE ID==3'''
+            update='''DELETE FROM directory WHERE ID="{}"'''.format(request.form[petID])
         elif note != "Delete":
-            petID=2
-            update = '''UPDATE directory SET Notes = '123' WHERE ID==3'''
+            update = '''UPDATE directory SET Notes = "{}".format(request.form["update"] WHERE ID="{}".format(request.form[petID])'''
         cur.execute(update)
         db.commit()
         results = getData()
